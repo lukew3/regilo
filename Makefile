@@ -1,4 +1,4 @@
-PROG = container
+PROG = regilo
 SOURCES = ${PROG}.c mongoose.c
 
 CC = gcc
