@@ -1,4 +1,4 @@
-PROG = http
+PROG = container
 SOURCES = ${PROG}.c mongoose.c
 
 CC = gcc
