@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+	<button id="spacebar">Spacebar</button>
+</body>
+<script>
+	const ws = new WebSocket('ws://localhost:8000');
+	ws.onopen = () => {console.log('CONNECTION OPENED')};
+	document.getElementById('spacebar').addEventListener('click', () => {
+		ws.send('spacebar');
+		console.log('<SPACEBAR> sent');
+	});
+</script>
+</html>
