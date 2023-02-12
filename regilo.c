@@ -2,6 +2,8 @@
 #include <pthread.h>
 #include "mongoose.h"
 
+GtkBuilder *builder;
+GtkWidget *window;
 
 static void server_callback(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
 	struct mg_http_serve_opts opts = {.root_dir = "."};   // Serve local dir
@@ -23,9 +25,6 @@ int main(int argc, char **argv) {
 	// pthread_join(server_thread, NULL); // Wait for termination of server_thread
 
 	// Run gtk app in main thread
-	GtkBuilder *builder;
-	GtkWidget *window;
-
 	gtk_init(&argc, &argv);
 
 	builder = gtk_builder_new_from_file("regilo.glade");
