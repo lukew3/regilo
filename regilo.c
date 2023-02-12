@@ -23,29 +23,20 @@ int main(int argc, char **argv) {
 	// pthread_join(server_thread, NULL); // Wait for termination of server_thread
 
 	// Run gtk app in main thread
-	gtk_init(&argc, &argv);
+	GtkBuilder *builder;
 	GtkWidget *window;
 
-	GtkWidget *box;
+	gtk_init(&argc, &argv);
 
-	GtkWidget *button1;
-	GtkWidget *button2;
+	builder = gtk_builder_new_from_file("regilo.glade");
 
-	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-
-	box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-
-	button1 = gtk_button_new_with_label("button1");
-	button2 = gtk_button_new_with_label("button2");
-
-	gtk_container_add(GTK_CONTAINER(window), box);
-
-	gtk_box_pack_start(GTK_BOX(box), button1, TRUE, TRUE, 50);
-	gtk_box_pack_start(GTK_BOX(box), button2, TRUE, FALSE, 50);
+	window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
 
 	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
-	gtk_widget_show_all(window);
+	// gtk_widget_show_all(window);
+	gtk_widget_show(window);
 	gtk_main();
-	return 0;
+
+	return EXIT_SUCCESS;
 }
