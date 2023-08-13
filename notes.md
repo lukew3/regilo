@@ -1,10 +1,9 @@
 # Planning
 
 ## Program Flow
-1. Show start page GUI and enable selecting project, maybe port.
-2. After program started, host flutter app on port via http.
-3. Listen for keyboard commands over tcp
-4. If GUI stop button is pressed, kill server
+1. Show start page GUI and enable selecting project, maybe port. The server is started automatically, and serves a placeholder page until a controller is selected.
+2. Listen for keyboard commands over websocket
+3. If GUI stop button is pressed, kill server
 
 ## Desktop GUI
 Contains:
