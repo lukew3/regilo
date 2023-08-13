@@ -25,6 +25,7 @@ void *start_static_server(char* serve_dir) {
 
 // Serve the directory or zip file passed as argument
 int main(int argc, char **argv) {
+	system("xdotool key i");
 	// If there are arguments, use the first as the serve directory
 	if (argc > 1) serve_dir = argv[1];
         // Start static server in a new thread
