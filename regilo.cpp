@@ -1,9 +1,13 @@
+#include <gtk/gtk.h>
 #include <pthread.h>
 #include "mongoose.h"
 
 static void server_callback(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
         struct mg_http_serve_opts opts = {.root_dir = "."};   // Serve local dir
-        if (ev == MG_EV_HTTP_MSG) mg_http_serve_dir(c, ev_data, &opts);
+        if (ev == MG_EV_HTTP_MSG) {
+		struct mg_http_message *hm = (struct mg_http_message *) ev_data;
+		mg_http_serve_dir(c, hm, &opts);
+	}	
 }
 
 void *start_static_server(void *vargp) {
@@ -18,5 +22,7 @@ int main(int argc, char **argv) {
         // Start static server in a new thread
         pthread_t server_thread;
         pthread_create(&server_thread, NULL, start_static_server, NULL);
-	pthread_join(server_thread, NULL); // Wait for termination of server_thread
+        pthread_join(server_thread, NULL); // Wait for termination of server_thread
+
+        return EXIT_SUCCESS;
 }
