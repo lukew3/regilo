@@ -1,4 +1,5 @@
-#include <gtk/gtk.h>
+#include <iostream>
+#include <thread>
 #include <pthread.h>
 #include "mongoose.h"
 
@@ -10,19 +11,20 @@ static void server_callback(struct mg_connection *c, int ev, void *ev_data, void
 	}	
 }
 
-void *start_static_server(void *vargp) {
+void *start_static_server() {
         struct mg_mgr mgr;
         mg_mgr_init(&mgr);                                        // Init manager
         mg_http_listen(&mgr, "http://localhost:8000", server_callback, &mgr);  // Setup listener
+	std::cout << "Serving on http://localhost:8000" << std::endl;
         for (;;) mg_mgr_poll(&mgr, 1000);                         // Event loop
         mg_mgr_free(&mgr);                                        // Cleanup
 }
 
+// Serve the directory or zip file passed as argument
 int main(int argc, char **argv) {
         // Start static server in a new thread
-        pthread_t server_thread;
-        pthread_create(&server_thread, NULL, start_static_server, NULL);
-        pthread_join(server_thread, NULL); // Wait for termination of server_thread
+	std::thread server_thread(&start_static_server);
+	server_thread.join(); // join and block main thread
 
         return EXIT_SUCCESS;
 }
