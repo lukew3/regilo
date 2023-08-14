@@ -4,8 +4,9 @@
 	<button id="spacebar">Spacebar</button>
 </body>
 <script>
-	const ws = new WebSocket('ws://localhost:8000');
+	const ws = new WebSocket('ws://localhost:8000/websocket');
 	ws.onopen = () => {console.log('CONNECTION OPENED')};
+	ws.onmessage = function(ev) { console.log('RECEIVED: ' + ev.data); }
 	document.getElementById('spacebar').addEventListener('click', () => {
 		ws.send('spacebar');
 		console.log('<SPACEBAR> sent');
