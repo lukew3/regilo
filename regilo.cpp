@@ -18,7 +18,7 @@ static void server_callback(struct mg_connection *c, int ev, void *ev_data, void
 	} else if (ev == MG_EV_WS_MSG) {
 		struct mg_ws_message *wm = (struct mg_ws_message *) ev_data;    
 		// Got websocket frame. Received data is wm->data. Echo it back!
-		char* exec_string = "xdotool key ";
+		char exec_string[100] = "xdotool key ";
 		std::cout << wm->data.ptr << std::endl;
 		strcat(exec_string, wm->data.ptr);
 		std::cout << exec_string << std::endl;
@@ -40,7 +40,6 @@ void *start_static_server(char* serve_dir) {
 
 // Serve the directory or zip file passed as argument
 int main(int argc, char **argv) {
-	system("xdotool key i");
 	// If there are arguments, use the first as the serve directory
 	if (argc > 1) serve_dir = argv[1];
         // Start static server in a new thread
