@@ -7,8 +7,8 @@
 char* serve_dir = ".";
 
 static void server_callback(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
-        struct mg_http_serve_opts opts = {.root_dir = serve_dir};   // Serve local dir
         if (ev == MG_EV_HTTP_MSG) {
+		struct mg_http_serve_opts opts = {.root_dir = serve_dir};   // Serve local dir
 		struct mg_http_message *hm = (struct mg_http_message *) ev_data;
 		mg_http_serve_dir(c, hm, &opts);
 	}	
@@ -17,7 +17,7 @@ static void server_callback(struct mg_connection *c, int ev, void *ev_data, void
 void *start_static_server(char* serve_dir) {
         struct mg_mgr mgr;
         mg_mgr_init(&mgr);                                        // Init manager
-        mg_http_listen(&mgr, "http://localhost:8000", server_callback, &mgr);  // Setup listener
+        mg_http_listen(&mgr, "http://localhost:8000", server_callback, NULL);  // Setup listener
 	std::cout << "Serving from \"" << serve_dir << "\" on http://localhost:8000" << std::endl;
         for (;;) mg_mgr_poll(&mgr, 1000);                         // Event loop
         mg_mgr_free(&mgr);                                        // Cleanup
